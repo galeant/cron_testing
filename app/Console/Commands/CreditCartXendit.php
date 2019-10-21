@@ -55,7 +55,6 @@ class CreditCartXendit extends Command
 
         if($data->count() != 0){
             foreach($data as $dt){
-
                 $new_data_order = $dt->toArray();
                 $new_data_order['date_added'] = Carbon::now()->format('Y-m-d');
                 $new_data_order['date_modified'] = Carbon::now()->format('Y-m-d');
@@ -109,6 +108,9 @@ class CreditCartXendit extends Command
                     //     'log' => $responseBodyAsString
                     // ]);
                     // $responseBodyAsString = $response->getBody()->getContents()
+                    Order::where('order_id',$dt->order_id)->update([
+                        'subscribe' => 0
+                    ]);
                 }catch (GuzzleException $e) {
                     $response = $e->getResponse();
                     $responseBodyAsString = $response->getBody()->getContents();
